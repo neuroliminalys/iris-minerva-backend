@@ -14,6 +14,8 @@ import fr.iris_minerva.domain.usecases.BookUsecases;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.PutMapping;
+
 
 
 
@@ -47,7 +49,10 @@ public class BooksController {
         return bookUsecases.createBook(newBook);
     }
 
-    // Todo : put method
+    @PutMapping(path = "/edit")
+    public ResponseEntity<String> editBookById(@RequestBody Book book) {
+        return bookUsecases.editBook(book);
+    }
 
     @DeleteMapping(params = "bookId")
     public ResponseEntity<String> deleteSelectedBook(@RequestParam String bookId) {

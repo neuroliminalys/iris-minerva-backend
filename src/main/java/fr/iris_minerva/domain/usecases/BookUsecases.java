@@ -31,7 +31,7 @@ public class BookUsecases {
 
     public ResponseEntity<BookDto> getBookById(String bookId) {
         Optional<Book> foundBook = bookRepo.findById(bookId);
-        if(foundBook.isPresent()) {
+        if (foundBook.isPresent()) {
             return new ResponseEntity<BookDto>(new BookDto(foundBook.get()), HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -46,22 +46,22 @@ public class BookUsecases {
         return new ResponseEntity<>("Successfully created", HttpStatus.CREATED);
     }
 
-    public ResponseEntity<String> editBook(String bookId, Book editedBook) {
-        Optional<Book> foundBook = bookRepo.findById(bookId);
-        if (foundBook.isPresent()) {
-            try {
+    public ResponseEntity<String> editBook(Book editedBook) {
+        try {
+            Optional<Book> foundBook = bookRepo.findById(editedBook.getId());
+            if (foundBook.isPresent()) {
                 bookRepo.save(editedBook);
                 return new ResponseEntity<String>("Successfully edited", HttpStatus.NO_CONTENT);
-            } catch (Exception e) {
-                return new ResponseEntity<>(HttpStatus.UNPROCESSABLE_CONTENT);
             }
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.UNPROCESSABLE_CONTENT);
         }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     public ResponseEntity<String> deleteBook(String bookId) {
         Optional<Book> foundBook = bookRepo.findById(bookId);
-        if(foundBook.isPresent()) {
+        if (foundBook.isPresent()) {
             bookRepo.delete(foundBook.get());
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
