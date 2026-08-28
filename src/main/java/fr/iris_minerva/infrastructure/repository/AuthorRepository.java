@@ -9,5 +9,7 @@ import fr.iris_minerva.core.entity.Author;
 public interface AuthorRepository extends JpaRepository<Author, String> {
     public Optional<Author> findByLastName(String lastname);
     public Optional<Author> findByFirstName(String firstname);
+
+    public Optional<Author> findByFirstNameAndLastName(String firstname, String lastname);
     
 }
